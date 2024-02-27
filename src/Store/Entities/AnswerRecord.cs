@@ -19,5 +19,8 @@ public sealed class AnswerRecord : EntityBase
     /// Ответ на вопрос.
     /// </summary>
     public string Answer { get; set; }
+
+
+    public Guid QuestionRecordId { get; set; }
 }
 

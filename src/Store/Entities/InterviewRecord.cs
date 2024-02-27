@@ -19,6 +19,7 @@ public sealed class InterviewRecord : EntityBase
     /// </summary>
     public DateTime InterviewDate { get; set; }
 
+    public Guid SurveyRecordId { get; set; }
 
     /// <summary>
     /// Результаты опроса.
