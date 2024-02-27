@@ -1,15 +1,15 @@
 ﻿version: '3.7'
 
 services:
-  postgres:
-     restart: always
-     image: postgres
-     environment:
-       POSTGRES_USER: postgres  # Замените на свои настройкиs
-       POSTGRES_PASSWORD: As30101987  # Замените на свои настройки
-       POSTGRES_DB: AspWebApi  # Замените на свои настройки
-     ports:
-       - "5432:5432"  # Проброс порта хоста на контейнер с PostgreSQL
+  # postgres:
+  #    restart: always
+  #    image: postgres
+  #    environment:
+  #      POSTGRES_USER: postgres  # Замените на свои настройкиs
+  #      POSTGRES_PASSWORD: As30101987  # Замените на свои настройки
+  #      POSTGRES_DB: AspWebApi  # Замените на свои настройки
+  #    ports:
+  #      - "5432:5432"  # Проброс порта хоста на контейнер с PostgreSQL
 
   webapi:
     build:
@@ -17,3 +17,5 @@ services:
       dockerfile: Dockerfile # Путь к Dockerfile для вашего ASP.NET Core Web API
     ports:
       - "5000:5000"  # Проброс порта хоста на контейнер с API
+    # depends_on:
+    #   - postgres 
