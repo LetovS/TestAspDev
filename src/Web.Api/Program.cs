@@ -5,6 +5,7 @@ using Web.Api.Services.Implementations;
 using Store.DI;
 using Web.Api.Infrastructure.Automapper;
 using Microsoft.EntityFrameworkCore;
+using Store.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,11 +42,13 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-//}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+DatabaseMigrationManager.MigrateSchema().Wait();
+
+await DatabaseMigrationManager.InitialTestData();
 
 app.UseHttpsRedirection();
 
