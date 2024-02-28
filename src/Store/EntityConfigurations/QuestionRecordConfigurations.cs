@@ -14,5 +14,13 @@ public class QuestionRecordConfigurations : IEntityTypeConfiguration<QuestionRec
         builder.ConfigureIdBaseEntity();
 
         builder.Property(x => x.Question).IsRequired();
+
+        builder.HasIndex(x => x.Id)
+            .HasDatabaseName("IX_Questions_Id")
+            .IsUnique();
+
+        builder.HasIndex(p => p.Question)
+            .HasDatabaseName("UQ_Questions_Question")
+            .IsUnique();
     }
 }

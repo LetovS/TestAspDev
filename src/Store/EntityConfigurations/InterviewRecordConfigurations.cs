@@ -12,5 +12,11 @@ public class InterviewRecordConfigurations : IEntityTypeConfiguration<InterviewR
     {
         builder.ToTable(ConfigurationSettings.Interview.TableName);
         builder.ConfigureIdBaseEntity();
+
+        builder.HasIndex(x => x.Id)
+            .HasDatabaseName("IX_Interviews_Id")
+            .IsUnique();
+
+        builder.HasIndex(p => new { p.InterviewDate }).HasDatabaseName("IX_Interviews_InterviewDate");
     }
 }

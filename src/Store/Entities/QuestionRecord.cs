@@ -6,7 +6,9 @@ namespace Store.Entities;
 /// <summary>
 /// Представляет сущность вопроса.
 /// </summary>
-public sealed class QuestionRecord : EntityBase, IComparable<QuestionRecord>
+public sealed class QuestionRecord :
+    EntityBase,
+    IComparable<QuestionRecord>
 {
     /// <summary>
     /// ctor.

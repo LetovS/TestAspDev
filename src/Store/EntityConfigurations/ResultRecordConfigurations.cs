@@ -14,5 +14,13 @@ public class ResultRecordConfigurations : IEntityTypeConfiguration<ResultRecord>
         builder.ConfigureIdBaseEntity();
 
         builder.Property(x => x.Answer).IsRequired();
+
+        builder.HasIndex(x => x.Id)
+            .HasDatabaseName("IX_Results_Id")
+            .IsUnique();
+
+        builder.HasIndex(x => x.Answer)
+            .HasDatabaseName("UQ_Results_Answer")
+            .IsUnique();
     }
 }

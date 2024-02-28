@@ -19,5 +19,15 @@ public class SurveyRecordConfigurations : IEntityTypeConfiguration<SurveyRecord>
         builder.Property(x => x.CreatedAt).HasDefaultValue(DateTime.UtcNow);
         builder.Property(x => x.StartDate).HasDefaultValue(DateTime.UtcNow);
         builder.Property(x => x.EndDate).HasDefaultValue(DateTime.UtcNow.AddDays(14));
+
+        builder.HasIndex(x => x.Id)
+            .HasDatabaseName("IX_Surveys_Id")
+            .IsUnique();
+
+        builder.HasIndex(p => p.Title)
+            .HasDatabaseName("UQ_Surveys_Title")
+            .IsUnique();
+
+        builder.HasIndex(p => new { p.CreatedAt }).HasDatabaseName("IX_Surveys_CreatedAt");
     }
 }
