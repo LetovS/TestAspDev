@@ -32,6 +32,8 @@ public sealed class QuestionRecord :
     /// </summary>
     public ICollection<AnswerRecord> Answers { get; set; } = new List<AnswerRecord>();
 
+    public Guid SurveyId { get; set; }
+
     public int CompareTo(QuestionRecord? other)
     {
         if (other == null) throw new ArgumentNullException();

@@ -18,5 +18,7 @@ public sealed class ResultRecord : EntityBase
     /// Ответ опрашиваемого.
     /// </summary>
     public string Answer { get; set; }
+
+    public Guid InterviewId { get; set; }
 }
 

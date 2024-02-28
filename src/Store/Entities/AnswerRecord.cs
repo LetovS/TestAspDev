@@ -20,7 +20,6 @@ public sealed class AnswerRecord : EntityBase
     /// </summary>
     public string Answer { get; set; }
 
-
-    public Guid QuestionRecordId { get; set; }
+    public Guid QuestionId { get; set; }
 }
 

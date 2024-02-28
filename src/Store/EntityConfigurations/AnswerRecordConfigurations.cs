@@ -16,8 +16,7 @@ public class AnswerRecordConfigurations : IEntityTypeConfiguration<AnswerRecord>
         builder.Property(x => x.Answer).IsRequired();
 
         builder.HasIndex(x => x.Id)
-            .HasDatabaseName("IX_Answers_Id")
-            .IsUnique();
+            .HasDatabaseName("IX_Answers_Id");
 
         builder.HasIndex(p => p.Answer)
             .HasDatabaseName("UQ_Answers_Answer")
