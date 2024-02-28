@@ -12,7 +12,7 @@ using Store;
 namespace Store.Migrations
 {
     [DbContext(typeof(ResourcesContext))]
-    [Migration("20240228170817_Init")]
+    [Migration("20240228171416_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Store.Migrations
                     b.Property<DateTime>("InterviewDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 2, 28, 17, 8, 17, 26, DateTimeKind.Utc).AddTicks(4694));
+                        .HasDefaultValue(new DateTime(2024, 2, 28, 17, 14, 16, 920, DateTimeKind.Utc).AddTicks(9680));
 
                     b.Property<Guid>("SurveyId")
                         .HasColumnType("uuid");
@@ -140,7 +140,7 @@ namespace Store.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 2, 28, 17, 8, 17, 27, DateTimeKind.Utc).AddTicks(4163));
+                        .HasDefaultValue(new DateTime(2024, 2, 28, 17, 14, 16, 921, DateTimeKind.Utc).AddTicks(9036));
 
                     b.Property<string>("Description")
                         .HasMaxLength(255)
@@ -149,12 +149,12 @@ namespace Store.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 3, 13, 17, 8, 17, 27, DateTimeKind.Utc).AddTicks(4481));
+                        .HasDefaultValue(new DateTime(2024, 3, 13, 17, 14, 16, 921, DateTimeKind.Utc).AddTicks(9349));
 
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 2, 28, 17, 8, 17, 27, DateTimeKind.Utc).AddTicks(4371));
+                        .HasDefaultValue(new DateTime(2024, 2, 28, 17, 14, 16, 921, DateTimeKind.Utc).AddTicks(9235));
 
                     b.Property<string>("Title")
                         .IsRequired()

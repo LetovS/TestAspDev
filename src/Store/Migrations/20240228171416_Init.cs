@@ -18,9 +18,9 @@ namespace Store.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 2, 28, 17, 8, 17, 27, DateTimeKind.Utc).AddTicks(4163)),
-                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 2, 28, 17, 8, 17, 27, DateTimeKind.Utc).AddTicks(4371)),
-                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 3, 13, 17, 8, 17, 27, DateTimeKind.Utc).AddTicks(4481))
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 2, 28, 17, 14, 16, 921, DateTimeKind.Utc).AddTicks(9036)),
+                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 2, 28, 17, 14, 16, 921, DateTimeKind.Utc).AddTicks(9235)),
+                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 3, 13, 17, 14, 16, 921, DateTimeKind.Utc).AddTicks(9349))
                 },
                 constraints: table =>
                 {
@@ -32,7 +32,7 @@ namespace Store.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    InterviewDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 2, 28, 17, 8, 17, 26, DateTimeKind.Utc).AddTicks(4694)),
+                    InterviewDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 2, 28, 17, 14, 16, 920, DateTimeKind.Utc).AddTicks(9680)),
                     SurveyId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>

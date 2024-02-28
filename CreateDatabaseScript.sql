@@ -1,3 +1,5 @@
+create database DemoDatabase;
+
 CREATE TABLE "Surveys" (
     "Id" uuid NOT NULL,
     "Title" text NOT NULL,
@@ -21,7 +23,7 @@ CREATE TABLE "Results" (
     "InterviewId" uuid NOT NULL,
     "Answer" text NOT NULL,
     CONSTRAINT "PK_Results" PRIMARY KEY ("Id"),
-    CONSTRAINT "FK_Results_Interviews_InterviewId" FOREIGN KEY ("InterviewId") REFERENCES "Interviews" ("Id")
+    CONSTRAINT "FK_Results_Interviews_InterviewId" FOREIGN KEY ("InterviewId") REFERENCES "Interviews" ("Id")  ON DELETE CASCADE
 );
 
 CREATE TABLE "Questions" (
@@ -30,7 +32,7 @@ CREATE TABLE "Questions" (
     "Type" integer NOT NULL,
     "SurveyId" uuid NOT NULL,
     CONSTRAINT "PK_Questions" PRIMARY KEY ("Id"),
-    CONSTRAINT "FK_Questions_Surveys_SurveyIdId" FOREIGN KEY ("SurveyId") REFERENCES "Surveys" ("Id")
+    CONSTRAINT "FK_Questions_Surveys_SurveyIdId" FOREIGN KEY ("SurveyId") REFERENCES "Surveys" ("Id")  ON DELETE CASCADE
 );
 
 CREATE TABLE "Answers" (
@@ -38,13 +40,25 @@ CREATE TABLE "Answers" (
     "Answer" text NOT NULL,
     "QuestionId" uuid NOT NULL,
     CONSTRAINT "PK_Answers" PRIMARY KEY ("Id"),
-    CONSTRAINT "FK_Answers_Questions_QuestionId" FOREIGN KEY ("QuestionId") REFERENCES "Questions" ("Id")
+    CONSTRAINT "FK_Answers_Questions_QuestionId" FOREIGN KEY ("QuestionId") REFERENCES "Questions" ("Id")  ON DELETE CASCADE
 );
 
-CREATE INDEX idx_surveys_id ON "Surveys" ("Id");
-CREATE INDEX idx_questions_id ON "Questions" ("Id");
-CREATE INDEX idx_questions_question ON "Questions" ("Question");
-CREATE INDEX idx_interviews_id ON "Interviews" ("Id");
-CREATE INDEX idx_results_id ON "Results" ("Id");
-CREATE INDEX idx_answers_answer ON "Answers" ("Answer");
+CREATE INDEX "IX_Answers_Id" ON "Answers" ("Id");
+CREATE INDEX "IX_Answers_QuestionId" ON "Answers" ("QuestionId");
+CREATE UNIQUE INDEX "UQ_Answers_Answer" ON "Answers" ("Answer");
 
+CREATE INDEX "IX_Interviews_Id" ON "Interviews" ("Id");
+CREATE INDEX "IX_Interviews_InterviewDate" ON "Interviews" ("InterviewDate");
+CREATE INDEX "IX_Interviews_SurveyId" ON "Interviews" ("SurveyId");
+
+CREATE INDEX "IX_Questions_Id" ON "Questions" ("Id");
+CREATE INDEX "IX_Questions_SurveyId" ON "Questions" ("SurveyId");
+CREATE UNIQUE INDEX "UQ_Questions_Question" ON "Questions" ("Question");
+
+CREATE INDEX "IX_Results_Id" ON "Results" ("Id");
+CREATE INDEX "IX_Results_InterviewId" ON "Results" ("InterviewId");
+CREATE UNIQUE INDEX "UQ_Results_Answer" ON "Results" ("Answer");
+
+CREATE INDEX "IX_Surveys_CreatedAt" ON "Surveys" ("CreatedAt");
+CREATE INDEX "IX_Surveys_Id" ON "Surveys" ("Id");
+CREATE UNIQUE INDEX "UQ_Surveys_Title" ON "Surveys" ("Title");
