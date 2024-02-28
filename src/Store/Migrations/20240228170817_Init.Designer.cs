@@ -12,7 +12,7 @@ using Store;
 namespace Store.Migrations
 {
     [DbContext(typeof(ResourcesContext))]
-    [Migration("20240227155208_Init")]
+    [Migration("20240228170817_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -34,12 +34,19 @@ namespace Store.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("QuestionRecordId")
+                    b.Property<Guid>("QuestionId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionRecordId");
+                    b.HasIndex("Answer")
+                        .IsUnique()
+                        .HasDatabaseName("UQ_Answers_Answer");
+
+                    b.HasIndex("Id")
+                        .HasDatabaseName("IX_Answers_Id");
+
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answers", (string)null);
                 });
@@ -50,14 +57,22 @@ namespace Store.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("InterviewDate")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValue(new DateTime(2024, 2, 28, 17, 8, 17, 26, DateTimeKind.Utc).AddTicks(4694));
 
-                    b.Property<Guid?>("SurveyRecordId")
+                    b.Property<Guid>("SurveyId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SurveyRecordId");
+                    b.HasIndex("Id")
+                        .HasDatabaseName("IX_Interviews_Id");
+
+                    b.HasIndex("InterviewDate")
+                        .HasDatabaseName("IX_Interviews_InterviewDate");
+
+                    b.HasIndex("SurveyId");
 
                     b.ToTable("Interviews", (string)null);
                 });
@@ -71,7 +86,7 @@ namespace Store.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("SurveyRecordId")
+                    b.Property<Guid>("SurveyId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Type")
@@ -79,7 +94,14 @@ namespace Store.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SurveyRecordId");
+                    b.HasIndex("Id")
+                        .HasDatabaseName("IX_Questions_Id");
+
+                    b.HasIndex("Question")
+                        .IsUnique()
+                        .HasDatabaseName("UQ_Questions_Question");
+
+                    b.HasIndex("SurveyId");
 
                     b.ToTable("Questions", (string)null);
                 });
@@ -93,12 +115,19 @@ namespace Store.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("InterviewRecordId")
+                    b.Property<Guid>("InterviewId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InterviewRecordId");
+                    b.HasIndex("Answer")
+                        .IsUnique()
+                        .HasDatabaseName("UQ_Results_Answer");
+
+                    b.HasIndex("Id")
+                        .HasDatabaseName("IX_Results_Id");
+
+                    b.HasIndex("InterviewId");
 
                     b.ToTable("Results", (string)null);
                 });
@@ -111,7 +140,7 @@ namespace Store.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 52, 8, 464, DateTimeKind.Utc).AddTicks(5938));
+                        .HasDefaultValue(new DateTime(2024, 2, 28, 17, 8, 17, 27, DateTimeKind.Utc).AddTicks(4163));
 
                     b.Property<string>("Description")
                         .HasMaxLength(255)
@@ -120,18 +149,28 @@ namespace Store.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 3, 12, 15, 52, 8, 464, DateTimeKind.Utc).AddTicks(6247));
+                        .HasDefaultValue(new DateTime(2024, 3, 13, 17, 8, 17, 27, DateTimeKind.Utc).AddTicks(4481));
 
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 2, 27, 15, 52, 8, 464, DateTimeKind.Utc).AddTicks(6110));
+                        .HasDefaultValue(new DateTime(2024, 2, 28, 17, 8, 17, 27, DateTimeKind.Utc).AddTicks(4371));
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_Surveys_CreatedAt");
+
+                    b.HasIndex("Id")
+                        .HasDatabaseName("IX_Surveys_Id");
+
+                    b.HasIndex("Title")
+                        .IsUnique()
+                        .HasDatabaseName("UQ_Surveys_Title");
 
                     b.ToTable("Surveys", (string)null);
                 });
@@ -140,28 +179,36 @@ namespace Store.Migrations
                 {
                     b.HasOne("Store.Entities.QuestionRecord", null)
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionRecordId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Store.Entities.InterviewRecord", b =>
                 {
                     b.HasOne("Store.Entities.SurveyRecord", null)
                         .WithMany("Interviews")
-                        .HasForeignKey("SurveyRecordId");
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Store.Entities.QuestionRecord", b =>
                 {
                     b.HasOne("Store.Entities.SurveyRecord", null)
                         .WithMany("Questions")
-                        .HasForeignKey("SurveyRecordId");
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Store.Entities.ResultRecord", b =>
                 {
                     b.HasOne("Store.Entities.InterviewRecord", null)
                         .WithMany("Results")
-                        .HasForeignKey("InterviewRecordId");
+                        .HasForeignKey("InterviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Store.Entities.InterviewRecord", b =>

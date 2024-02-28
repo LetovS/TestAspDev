@@ -6,7 +6,9 @@ namespace Store.Entities;
 /// <summary>
 /// Представляет сущность вопроса.
 /// </summary>
-public sealed class QuestionRecord : EntityBase, IComparable<QuestionRecord>
+public sealed class QuestionRecord :
+    EntityBase,
+    IComparable<QuestionRecord>
 {
     /// <summary>
     /// ctor.
@@ -29,6 +31,8 @@ public sealed class QuestionRecord : EntityBase, IComparable<QuestionRecord>
     /// Варианты ответов.
     /// </summary>
     public ICollection<AnswerRecord> Answers { get; set; } = new List<AnswerRecord>();
+
+    public Guid SurveyId { get; set; }
 
     public int CompareTo(QuestionRecord? other)
     {

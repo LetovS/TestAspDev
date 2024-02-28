@@ -15,11 +15,6 @@ internal static class ConfigurationSettings
         public const string TableName = "Interviews";
     }
 
-    internal static class Interviewer
-    {
-        public const string TableName = "Interviewers";
-    }
-
     internal static class Question
     {
         public const string TableName = "Questions";
