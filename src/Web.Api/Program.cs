@@ -1,4 +1,4 @@
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using Web.Api.Controllers;
 using Web.Api.Services.Abstract;
 using Web.Api.Services.Implementations;
@@ -17,8 +17,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<IQuestionCardsService, QuestionCardsService>();
 
-var connectionString = builder.Configuration.GetConnectionString("Default")
-                                ?? throw new ArgumentNullException("Connection string is null");
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings_Default")
+                    ?? builder.Configuration.GetConnectionString("Default")
+                               ?? throw new ArgumentNullException("Connection string can't be null");
+
 
 builder.Services.AddAutoMapper(x => x.AddProfile<ApiProfile>());
 
@@ -48,7 +50,7 @@ app.UseSwaggerUI();
 
 DatabaseMigrationManager.MigrateSchema().Wait();
 
-await DatabaseMigrationManager.InitialTestData();
+DatabaseMigrationManager.InitialTestData().Wait();
 
 app.UseHttpsRedirection();
 

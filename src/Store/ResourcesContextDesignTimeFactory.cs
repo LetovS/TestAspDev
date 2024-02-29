@@ -6,7 +6,7 @@ namespace Store.Migrations;
 
 internal class ResourcesContextDesignTimeFactory : IDesignTimeDbContextFactory<ResourcesContext>
 {
-    private const string _fileName = "appsettings.json";
+    private const string _fileName = "appsettings.Development.json";
     public ResourcesContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ResourcesContext>();
@@ -16,8 +16,12 @@ internal class ResourcesContextDesignTimeFactory : IDesignTimeDbContextFactory<R
             .AddJsonFile(_fileName)
             .Build();
 
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings_Default")
+                            ?? configurationBuilde.GetConnectionString("Default")
+                            ?? throw new ArgumentNullException("Connection string is empty");
+
         optionsBuilder
-            .UseNpgsql(configurationBuilde.GetConnectionString("Default") ?? throw new ArgumentNullException("Connection string is empty"));
+            .UseNpgsql(connectionString);
 
         return new ResourcesContext(optionsBuilder.Options);
     }
